@@ -49,7 +49,7 @@ fun layout(content: Html.() -> Unit): String {
                 text("Baseline")
             }
             nav("flex space-x-2") {
-                navbarButton("Console", "hx-get" to "/window/console/0")
+                navbarButton("Console", "hx-get" to "/console/new")
                 navbarButton("Browser", "hx-get" to "/window/browser/1")
             }
 

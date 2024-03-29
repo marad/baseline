@@ -10,12 +10,21 @@ import io.javalin.http.Context
 import party.iroiro.luajava.Lua
 
 fun installConsole(app: Javalin) {
+    app.get("/console/new", ::newConsoleWindow)
     app.get("/console/{window-id}", ::getConsole)
     app.post("/console/{window-id}", ::postConsole)
 }
 
 // ================================================================================
 // Handlers
+
+fun newConsoleWindow(ctx: Context) {
+    respond(ctx) {
+        windowUi("0", "console") {
+            consoleUi("0")
+        }
+    }
+}
 
 fun getConsole(ctx: Context) = respond(ctx) {
     consoleUi(ctx.windowId())
@@ -34,12 +43,12 @@ fun postConsole(ctx: Context) {
 
 fun Html.consoleUi(windowId: String, code: String = "", error: String = "") {
     val codeEditorId = "console-code-$windowId"
-    div("flex flex-col space-y-2 w-full h-full") {
+    div("flex flex-col space-y-2 w-full h-full p-2") {
         div("flex-1") {
             div("code w-full h-full border focus:outline focus:outline-slate-300",
                 "id" to codeEditorId,
                 "name" to "code",
-                "_" to "on htmx:afterSettle from .content call setupEditor(me)"
+                "_" to "on load call setupEditor(me)"
             ) {
                 text(code)
             }
@@ -56,7 +65,10 @@ fun Html.consoleUi(windowId: String, code: String = "", error: String = "") {
                     "value" to code,
                 )
                 button("$btnClass p-2",
-                    "_" to "on click get getCode('#$codeEditorId') set @value of previous <input/> to it") {
+                    "_" to """
+                        on click set 
+                        editor to previous .code 
+                        get editor.env.editor.getValue() set @value of previous <input/> to it""") {
                     text("Send")
                 }
             }
