@@ -49,7 +49,7 @@ fun layout(content: Html.() -> Unit): String {
             }
             nav("flex space-x-2") {
                 navbarButton("Console", "hx-get" to "/console/new")
-                navbarButton("Browser", "hx-get" to "/browser/new")
+                navbarButton("Lua State Browser", "hx-get" to "/lua/browser/new")
             }
 
             div("id" to "workspace", "hx-target" to "this") {

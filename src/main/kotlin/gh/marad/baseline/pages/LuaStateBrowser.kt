@@ -7,22 +7,22 @@ import io.javalin.Javalin
 import io.javalin.http.Context
 
 fun installBrowser(app: Javalin) {
-    app.get("/browser/new", ::newBrowser)
-    app.get("/browser", ::selectContent)
+    app.get("/lua/browser/new", ::newBrowser)
+    app.get("/lua/browser", ::selectContent)
 }
 
 // ================================================================================
 // Handler
 
-fun newBrowser(ctx: Context) {
+private fun newBrowser(ctx: Context) {
     respond(ctx) {
-        windowUi("Browser", 600, 500) {
+        windowUi("Lua State Browser", 600, 500) {
             browserUi(ctx.queryParam("selected") ?: "")
         }
     }
 }
 
-fun selectContent(ctx: Context) {
+private fun selectContent(ctx: Context) {
     respond(ctx) {
         browserUi(ctx.queryParam("selected") ?: "")
     }
@@ -47,7 +47,7 @@ fun Html.browserUi(path: String) {
             items.forEach { (name, value) ->
                 li(
                     genClass(name, 0),
-                    "hx-get" to "/browser?selected=$name",
+                    "hx-get" to "/lua/browser?selected=$name",
                 ) {
                     text("$name : ${value.type()}")
                 }
@@ -59,7 +59,7 @@ fun Html.browserUi(path: String) {
                 luaListChildren(selections.take(index).joinToString(".")).forEach { (name, value) ->
                     li(
                         genClass(name, index),
-                        "hx-get" to "/browser?selected=${selections.take(index).joinToString("/")}/$name",
+                        "hx-get" to "/lua/browser?selected=${selections.take(index).joinToString("/")}/$name",
                     ) {
                         text("$name : ${value.type()}")
                     }
