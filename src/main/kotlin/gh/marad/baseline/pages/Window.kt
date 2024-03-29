@@ -16,32 +16,48 @@ fun installWindow(app: Javalin) {
 // Handler
 
 fun createWindow(ctx: Context) {
-    respond(ctx) { windowUi(ctx) }
+    val id = ctx.windowId()
+    val type = ctx.windowType()
+
+    respond(ctx) {
+        windowUi(id, type) {
+            div(
+                "content grow p-2 overflow-auto", "id" to "content",
+                "hx-get" to "/$type/$id",
+                "hx-target" to "this",
+                "hx-trigger" to "load",
+                "hx-push-url" to "false"
+            ) {
+                text("Loading...")
+            }
+        }
+    }
 }
 
 // ================================================================================
 // UI
 
-fun Html.windowUi(ctx: Context) {
-    val windowId = ctx.windowId()
-    val path = "/${ctx.windowType()}/$windowId"
-
-    div("bg-slate-50 border-2 rounded-lg m-2 overflow-clip flex flex-col h-full w-full") {
-        div("header flex-none flex bg-slate-200 border-b cursor-move") {
-            span("title flex-1 px-3 py-2") { text(ctx.windowType().replaceFirstChar { it.uppercase() }) }
-            windowHeaderButton("onclick" to "closeWindow($windowId)") { text("X") }
-        }
-        div("content grow p-2 overflow-auto", "id" to "content",
-            "hx-get" to path,
-            "hx-target" to "this",
-            "hx-trigger" to "load",
-            "hx-push-url" to "false"
+fun Html.windowUi(windowId: String, windowType: String, content: Html.() -> Unit) {
+    div("window absolute",
+        "id" to "window-$windowId",
+        "style" to "width: 400px; height: 300px",
+        "_" to """
+            install Draggable(dragHandle: .header in me) 
+            install Resizable(resizeHandle: .resizer in me)
+            on window:close remove me
+        """.trimIndent()) {
+        div(
+            "bg-slate-50 border-2 rounded-lg m-2 overflow-clip flex flex-col h-full w-full",
         ) {
-            text("Loading...")
-        }
-        div("footer flex-none flex bg-slate-200") {
-            div("flex-1")
-            div("resizer flex-none bg-slate-300 w-3 h-3 cursor-nwse-resize") { text("&nbsp;") }
+            div("header flex-none flex bg-slate-200 border-b cursor-move") {
+                span("title flex-1 px-3 py-2") { text(windowType.replaceFirstChar { it.uppercase() }) }
+                windowHeaderButton("_" to "on click send window:close to closest .window") { text("X") }
+            }
+            content()
+            div("footer flex-none flex bg-slate-200") {
+                div("flex-1")
+                div("resizer flex-none bg-slate-300 w-3 h-3 cursor-nwse-resize") { text("&nbsp;") }
+            }
         }
     }
 }
