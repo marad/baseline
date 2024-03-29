@@ -20,7 +20,7 @@ fun createWindow(ctx: Context) {
     val type = ctx.windowType()
 
     respond(ctx) {
-        windowUi(id, type) {
+        windowUi(type) {
             div(
                 "content grow p-2 overflow-auto", "id" to "content",
                 "hx-get" to "/$type/$id",
@@ -37,9 +37,9 @@ fun createWindow(ctx: Context) {
 // ================================================================================
 // UI
 
-fun Html.windowUi(windowId: String, windowType: String, content: Html.() -> Unit) {
+fun Html.windowUi(windowType: String, content: Html.() -> Unit) {
     div("window absolute",
-        "id" to "window-$windowId",
+//        "id" to "window-$windowId",
         "style" to "width: 400px; height: 300px",
         "_" to """
             install Draggable(dragHandle: .header in me) 
