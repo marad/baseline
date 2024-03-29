@@ -33,5 +33,5 @@ kotlin {
 }
 
 application {
-    mainClass.set("MainKt")
+    mainClass.set("gh.marad.baseline.MainKt")
 }
