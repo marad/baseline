@@ -1,7 +1,7 @@
 
 function setupEditor(element) {
     var e = ace.edit(element)
-//    e.setTheme("ace/theme/monokai")
+    e.setTheme("ace/theme/monokai")
     e.setKeyboardHandler("ace/keyboard/vim");
     e.renderer.setOptions({
         fontSize: 17,

@@ -47,9 +47,9 @@ fun Html.windowUi(windowTitle: String, content: Html.() -> Unit) {
             on window:close remove me
         """.trimIndent()) {
         div(
-            "bg-slate-50 border-2 rounded-lg m-2 overflow-clip flex flex-col h-full w-full",
+            "bg-slate-50 dark:bg-slate-800 border-2 dark:border-slate-600 rounded-lg m-2 overflow-clip flex flex-col h-full w-full",
         ) {
-            div("header flex-none flex bg-slate-200 border-b cursor-move") {
+            div("header flex-none flex bg-slate-200 dark:bg-slate-700 border-b dark:border-slate-600 cursor-move") {
                 span("title flex-1 px-3 py-2") { text(windowTitle) }
                 windowHeaderButton("_" to "on click send window:close to closest .window") { text("X") }
             }
@@ -59,9 +59,9 @@ fun Html.windowUi(windowTitle: String, content: Html.() -> Unit) {
             ) {
                 content()
             }
-            div("footer flex-none flex bg-slate-200") {
+            div("footer flex-none flex bg-slate-200 dark:bg-slate-700") {
                 div("flex-1")
-                div("resizer flex-none bg-slate-300 w-3 h-3 cursor-nwse-resize") { text("&nbsp;") }
+                div("resizer flex-none bg-slate-300 dark:bg-slate-600 w-3 h-3 cursor-nwse-resize") { text("&nbsp;") }
             }
         }
     }
@@ -71,4 +71,4 @@ fun Html.windowHeaderButton(vararg attrs: Pair<String, Any>, content: Html.() ->
     windowHeaderButton("", attrs = attrs, content)
 
 fun Html.windowHeaderButton(classes: String? = null, vararg attrs: Pair<String, Any>, content: Html.() -> Unit) =
-    button("$btnClass $classes px-3 py-1 flex-none", attrs = attrs, content)
+    button("$btnClass $classes px-3 py-1 flex-none rounded-l-none rounded-b-none", attrs = attrs, content)

@@ -41,7 +41,7 @@ fun layout(content: Html.() -> Unit): String {
             resizable()
         }
         body(
-            "p-5",
+            "p-5 dark:bg-slate-800 dark:text-slate-400",
             "hx-boost" to "true",
         ) {
             h1("text-2xl p-3") {

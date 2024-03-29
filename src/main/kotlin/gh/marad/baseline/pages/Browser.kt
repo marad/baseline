@@ -36,10 +36,10 @@ fun Html.browserUi(path: String) {
 
     val selections = path.removePrefix("/").trim().split("/").filter { it.isNotEmpty() }
 
-    val baseStyle = "p-1 hover:bg-sky-300 cursor-pointer"
+    val baseStyle = "p-1 hover:bg-sky-300 dark:hover:bg-sky-800 cursor-pointer"
     fun genClass(name: String, level: Int): String =
         if (name == selections.getOrNull(level)) {
-            "bg-sky-400 $baseStyle"
+            "bg-sky-400 dark:bg-sky-700 $baseStyle"
         } else baseStyle
 
     div("flex w-full h-full space-x-2") {
