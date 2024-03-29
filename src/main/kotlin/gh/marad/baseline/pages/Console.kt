@@ -7,6 +7,7 @@ import io.github.marad.html.dsl.*
 import io.javalin.Javalin
 import io.javalin.http.Context
 import party.iroiro.luajava.Lua
+import java.util.*
 
 fun installConsole(app: Javalin) {
     app.get("/console/new", ::newConsoleWindow)
@@ -35,9 +36,10 @@ fun postConsole(ctx: Context) {
 // UI
 
 fun Html.consoleUi(code: String = "", error: String = "") {
+    val id = "x" + UUID.randomUUID().toString().replace("-", "")
     div("flex flex-col space-y-2 w-full h-full") {
         div("flex-1") {
-            div("code w-full h-full border focus:outline focus:outline-slate-300",
+            div("code w-full h-full border dark:border-slate-600 focus:outline focus:outline-slate-300",
                 "name" to "code",
                 "_" to "on load call setupEditor(me)"
             ) {
@@ -48,9 +50,9 @@ fun Html.consoleUi(code: String = "", error: String = "") {
             text(error)
         }
         div("flex-none flex") {
-            div("flex-1 .result")
+            div("flex-1", "id" to id)
             form("hx-post" to "/console/execute",
-                "hx-target" to "previous .result",
+                "hx-target" to "#$id",
 //                "hx-swap" to "innerHTML"
             ) {
                 input(
