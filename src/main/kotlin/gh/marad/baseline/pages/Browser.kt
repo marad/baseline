@@ -16,7 +16,7 @@ fun installBrowser(app: Javalin) {
 
 fun newBrowser(ctx: Context) {
     respond(ctx) {
-        windowUi("Browser") {
+        windowUi("Browser", 600, 500) {
             browserUi(ctx.queryParam("selected") ?: "")
         }
     }

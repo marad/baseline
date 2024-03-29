@@ -37,10 +37,10 @@ fun createWindow(ctx: Context) {
 // ================================================================================
 // UI
 
-fun Html.windowUi(windowTitle: String, content: Html.() -> Unit) {
+fun Html.windowUi(windowTitle: String, width: Int = 400, height: Int = 300, content: Html.() -> Unit) {
     div("window absolute",
 //        "id" to "window-$windowId",
-        "style" to "width: 400px; height: 300px",
+        "style" to "width: ${width}px; height: ${height}px",
         "_" to """
             install Draggable(dragHandle: .header in me) 
             install Resizable(resizeHandle: .resizer in me)
