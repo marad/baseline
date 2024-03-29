@@ -37,7 +37,7 @@ fun createWindow(ctx: Context) {
 // ================================================================================
 // UI
 
-fun Html.windowUi(windowType: String, content: Html.() -> Unit) {
+fun Html.windowUi(windowTitle: String, content: Html.() -> Unit) {
     div("window absolute",
 //        "id" to "window-$windowId",
         "style" to "width: 400px; height: 300px",
@@ -50,10 +50,15 @@ fun Html.windowUi(windowType: String, content: Html.() -> Unit) {
             "bg-slate-50 border-2 rounded-lg m-2 overflow-clip flex flex-col h-full w-full",
         ) {
             div("header flex-none flex bg-slate-200 border-b cursor-move") {
-                span("title flex-1 px-3 py-2") { text(windowType.replaceFirstChar { it.uppercase() }) }
+                span("title flex-1 px-3 py-2") { text(windowTitle) }
                 windowHeaderButton("_" to "on click send window:close to closest .window") { text("X") }
             }
-            content()
+            div("content grow p-2 overflow-auto",
+                "hx-target" to "this",
+                "hx-push-url" to "false"
+            ) {
+                content()
+            }
             div("footer flex-none flex bg-slate-200") {
                 div("flex-1")
                 div("resizer flex-none bg-slate-300 w-3 h-3 cursor-nwse-resize") { text("&nbsp;") }

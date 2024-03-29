@@ -16,7 +16,6 @@ fun index(ctx: Context) {
     ctx.html(layout {})
 }
 
-
 // ================================================================================
 // UI
 
@@ -50,7 +49,7 @@ fun layout(content: Html.() -> Unit): String {
             }
             nav("flex space-x-2") {
                 navbarButton("Console", "hx-get" to "/console/new")
-                navbarButton("Browser", "hx-get" to "/window/browser/1")
+                navbarButton("Browser", "hx-get" to "/browser/new")
             }
 
             div("id" to "workspace", "hx-target" to "this") {

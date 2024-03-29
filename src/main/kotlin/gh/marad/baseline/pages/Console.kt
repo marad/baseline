@@ -18,7 +18,7 @@ fun installConsole(app: Javalin) {
 
 fun newConsoleWindow(ctx: Context) {
     respond(ctx) {
-        windowUi("console") {
+        windowUi("Console") {
             consoleUi()
         }
     }
@@ -35,7 +35,7 @@ fun postConsole(ctx: Context) {
 // UI
 
 fun Html.consoleUi(code: String = "", error: String = "") {
-    div("flex flex-col space-y-2 w-full h-full p-2") {
+    div("flex flex-col space-y-2 w-full h-full") {
         div("flex-1") {
             div("code w-full h-full border focus:outline focus:outline-slate-300",
                 "name" to "code",
