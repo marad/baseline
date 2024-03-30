@@ -1,5 +1,9 @@
 
 function setupEditor(element) {
+    if (element.env) {
+        // editor already active
+        return;
+    }
     var e = ace.edit(element)
     e.setTheme("ace/theme/monokai")
     e.setKeyboardHandler("ace/keyboard/vim");

@@ -8,7 +8,7 @@ fun Context.windowType(): String = pathParam("window-type")
 fun Context.windowId(): String = pathParam("window-id")
 
 fun respond(ctx: Context, content: Html.() -> Unit) {
-    val isHxRequest = ctx.header("HX-Request") != null
+    val isHxRequest = ctx.header("Hx-Request") != null
     if (isHxRequest) {
         ctx.html(Html.create { content() })
     } else {

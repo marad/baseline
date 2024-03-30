@@ -23,9 +23,7 @@ fun createWindow(ctx: Context) {
         windowUi(type) {
             div(
                 "content grow p-2 overflow-auto", "id" to "content",
-                "hx-get" to "/$type/$id",
                 "hx-target" to "this",
-                "hx-trigger" to "load",
                 "hx-push-url" to "false"
             ) {
                 text("Loading...")
